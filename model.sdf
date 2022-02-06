@@ -587,7 +587,7 @@
         <namespace>kobra_mk5</namespace>
         <remapping>~/out:=joint_states</remapping>
       </ros>
-      <update_rate>50</update_rate>
+      <update_rate>25</update_rate>
       <joint_name>front_left_combined_joint</joint_name>
       <joint_name>front_right_combined_joint</joint_name>
       <joint_name>rear_left_wheel_joint</joint_name>
@@ -629,7 +629,7 @@
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
-      <update_rate>50</update_rate>
+      <update_rate>25</update_rate>
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <imu>
@@ -758,7 +758,7 @@
       
       <sensor name="my_gps_ideal" type="gps">
         <always_on>true</always_on>
-        <update_rate>50</update_rate>
+        <update_rate>25</update_rate>
         <gps>
           <position_sensing>
             <horizontal>
