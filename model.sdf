@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
-  <model name="prius_hybrid">
+  <model name="kobra_mk5">
     <pose>0 0 0.03 0 0 0</pose>
     <link name="chassis">
       <inertial>
@@ -218,8 +218,8 @@
         <surface>
           <friction>
             <ode>
-              <mu>0.9</mu>
-              <mu2>0.9</mu2>
+              <mu>9.9</mu>
+              <mu2>9.9</mu2>
               <slip1>0.0</slip1>
               <slip2>0.0</slip2>
             </ode>
@@ -273,8 +273,8 @@
         <surface>
           <friction>
             <ode>
-              <mu>0.9</mu>
-              <mu2>0.9</mu2>
+              <mu>9.9</mu>
+              <mu2>9.9</mu2>
               <slip1>0.0</slip1>
               <slip2>0.0</slip2>
             </ode>
@@ -329,8 +329,8 @@
         <surface>
           <friction>
             <ode>
-              <mu>1.1</mu>
-              <mu2>1.1</mu2>
+              <mu>10.1</mu>
+              <mu2>9.9</mu2>
               <slip1>0.0</slip1>
               <slip2>0.0</slip2>
             </ode>
@@ -383,8 +383,8 @@
         <surface>
           <friction>
             <ode>
-              <mu>1.1</mu>
-              <mu2>1.1</mu2>
+              <mu>10.1</mu>
+              <mu2>9.9</mu2>
               <slip1>0.0</slip1>
               <slip2>0.0</slip2>
             </ode>
@@ -527,8 +527,26 @@
       </physics>
     </joint>
 
+    <!-- Plugin to set wheel slip parameters according to wheel speed -->
+    <!-- <plugin name="wheel_slip_front" filename="libgazebo_ros_wheel_slip.so">
+      <ros>
+        <namespace>kobra_mk5</namespace>
+      </ros>
+      <wheel link_name="front_left_wheel">
+        <slip_compliance_lateral>0</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <wheel_normal_force>100</wheel_normal_force>
+      </wheel>
+      <wheel link_name="front_right_wheel">
+        <slip_compliance_lateral>0</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <wheel_normal_force>100</wheel_normal_force>
+      </wheel>
+    </plugin> -->
 
-    <plugin name='ackermann_drive' filename='libgazebo_ros_ackermann_drive.so'>
+    <!-- <plugin name='ackermann_drive' filename='libgazebo_ros_ackermann_drive.so'> -->
+    <!-- <plugin name='ackermann_drive' filename='libht_nav_gazebo_ros_ackermann_drive.so'> -->
+    <plugin name='ackermann_drive' filename='libgazebo_ros_new_ackermann_drive.so'>
 
       <ros>
         <namespace>kobra_mk5</namespace>
@@ -557,14 +575,14 @@
       <max_steering_angle>7.85</max_steering_angle>
 
       <!-- Max absolute linear speed in m/s -->
-      <max_speed>20</max_speed>
+      <max_speed>40</max_speed>
 
       <!-- PID tuning -->
-      <left_steering_pid_gain>1500 0 1</left_steering_pid_gain>
+      <left_steering_pid_gain>750 0 1</left_steering_pid_gain>
       <left_steering_i_range>0 0</left_steering_i_range>
-      <right_steering_pid_gain>1500 0 1</right_steering_pid_gain>
+      <right_steering_pid_gain>750 0 1</right_steering_pid_gain>
       <right_steering_i_range>0 0</right_steering_i_range>
-      <linear_velocity_pid_gain>1000 0 1</linear_velocity_pid_gain>
+      <linear_velocity_pid_gain>250 0 1</linear_velocity_pid_gain>
       <linear_velocity_i_range>0 0</linear_velocity_i_range>
 
       <!-- output -->
@@ -629,7 +647,7 @@
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
-      <update_rate>25</update_rate>
+      <!-- <update_rate>25</update_rate> -->
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <imu>
@@ -637,19 +655,19 @@
           <x>
             <noise type="gaussian">
               <mean>0.0</mean>
-              <stddev>5e-5</stddev>  <!-- 10 deg/hr -->
+              <stddev>5e-5</stddev>  
             </noise>
           </x>
           <y>
             <noise type="gaussian">
               <mean>0.0</mean>
-              <stddev>5e-5</stddev>  <!-- 10 deg/hr -->
+              <stddev>5e-5</stddev> 
             </noise>
           </y>
           <z>
             <noise type="gaussian">
               <mean>0.0</mean>
-              <stddev>5e-5</stddev>  <!-- 10 deg/hr -->
+              <stddev>5e-5</stddev> 
             </noise>
           </z>
         </angular_velocity>
@@ -657,24 +675,24 @@
           <x>
             <noise type="gaussian">
               <mean>0.0</mean>
-              <stddev>2e-2</stddev>  <!-- 2 mg -->
+              <stddev>2e-2</stddev>  
             </noise>
           </x>
           <y>
             <noise type="gaussian">
               <mean>0.0</mean>
-              <stddev>2e-2</stddev>  <!-- 2 mg -->
+              <stddev>2e-2</stddev>  
             </noise>
           </y>
           <z>
             <noise type="gaussian">
               <mean>0.0</mean>
-              <stddev>2e-2</stddev>  <!-- 2 mg -->
+              <stddev>2e-2</stddev> 
             </noise>
           </z>
         </linear_acceleration>
       </imu>
-      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+      <plugin filename="libht_nav_gazebo_ros_imu_sensor.so" name="imu_plugin">
         <ros>
           <namespace>kobra_mk5</namespace>
           <remapping>imu_plugin/out:=imu_data</remapping> 
@@ -682,9 +700,11 @@
         <!-- <topicName>imu</topicName> -->
         <bodyName>imu_link</bodyName>
         <updateRateHZ>50.0</updateRateHZ>
-        <!-- <gaussianNoise>0.0</gaussianNoise> -->
-        <xyzOffset>0 0 0</xyzOffset>
-        <rpyOffset>0 0 0</rpyOffset>
+        <gaussianNoise>1.0</gaussianNoise>
+        <AccRWStd>0.0</AccRWStd>
+        <GyroRWStd>0.0</GyroRWStd>
+        <AccBiasStd>0 0 0</AccBiasStd>
+        <GyroBiasStd>0 0 0</GyroBiasStd>
         <frameName>imu_link</frameName>
         <initialOrientationAsReference>false</initialOrientationAsReference>
       </plugin>
