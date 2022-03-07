@@ -605,14 +605,13 @@
         <namespace>kobra_mk5</namespace>
         <remapping>~/out:=joint_states</remapping>
       </ros>
-      <update_rate>25</update_rate>
+      <update_rate>100</update_rate>
       <joint_name>front_left_combined_joint</joint_name>
       <joint_name>front_right_combined_joint</joint_name>
       <joint_name>rear_left_wheel_joint</joint_name>
       <joint_name>rear_right_wheel_joint</joint_name>
       <joint_name>steering_joint</joint_name>
     </plugin>
-
 
     <link name="imu_link">
       <pose relative_to="chassis">0 0 0 0 0 0</pose>
@@ -628,70 +627,12 @@
           <izz>1e-6</izz>
         </inertia>
       </inertial>      
-
-      <!--
-      <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
-        <robotNamespace>/</robotNamespace>
-        <updateRate>2.0</updateRate>
-        <bodyName>chassis</bodyName>
-        <topicName>imu/data</topicName>
-        <accelDrift>0.005 0.005 0.005</accelDrift>
-        <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-        <rateDrift>0.005 0.005 0.005 </rateDrift>
-        <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-        <headingDrift>0.005</headingDrift>
-        <headingGaussianNoise>0.005</headingGaussianNoise>
-      </plugin>
-      -->
-    
+   
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
-      <!-- <update_rate>25</update_rate> -->
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
-      <imu>
-        <angular_velocity>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>5e-5</stddev>  
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>5e-5</stddev> 
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>5e-5</stddev> 
-            </noise>
-          </z>
-        </angular_velocity>
-        <linear_acceleration>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-2</stddev>  
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-2</stddev>  
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-2</stddev> 
-            </noise>
-          </z>
-        </linear_acceleration>
-      </imu>
       <plugin filename="libht_nav_gazebo_ros_imu_sensor.so" name="imu_plugin">
         <ros>
           <namespace>kobra_mk5</namespace>
@@ -699,12 +640,14 @@
         </ros>
         <!-- <topicName>imu</topicName> -->
         <bodyName>imu_link</bodyName>
-        <updateRateHZ>50.0</updateRateHZ>
-        <gaussianNoise>1.0</gaussianNoise>
-        <AccRWStd>0.0</AccRWStd>
-        <GyroRWStd>0.0</GyroRWStd>
-        <AccBiasStd>0 0 0</AccBiasStd>
-        <GyroBiasStd>0 0 0</GyroBiasStd>
+        <updateRateHZ>100.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>  
+        <AccRWStd>0.065</AccRWStd>
+        <GyroRWStd>0.125</GyroRWStd>
+        <AccBiasStd>1.0</AccBiasStd>
+        <GyroBiasStd>1.0</GyroBiasStd>
+        <AccSFStd>0.0</AccSFStd>
+        <GyroSFStd>0.0</GyroSFStd>
         <frameName>imu_link</frameName>
         <initialOrientationAsReference>false</initialOrientationAsReference>
       </plugin>
@@ -716,6 +659,55 @@
       <pose>0.0 0.0 0.0 0 0 0</pose>
       <parent>chassis</parent>
       <child>imu_link</child>
+    </joint>
+
+
+    <link name="imu_link_ideal">
+      <pose relative_to="chassis">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>1e-5</mass>
+        <inertia>
+          <ixx>1e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-6</iyy>
+          <iyz>0</iyz>
+          <izz>1e-6</izz>
+        </inertia>
+      </inertial>      
+   
+    <gravity>true</gravity>
+    <sensor name="imu_sensor_ideal" type="imu">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libht_nav_gazebo_ros_imu_sensor.so" name="imu_plugin_ideal">
+        <ros>
+          <namespace>kobra_mk5</namespace>
+          <remapping>imu_plugin_ideal/out:=imu_data_ideal</remapping> 
+        </ros>
+        <!-- <topicName>imu</topicName> -->
+        <bodyName>imu_link_ideal</bodyName>
+        <updateRateHZ>100.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>  
+        <AccRWStd>0.0</AccRWStd>
+        <GyroRWStd>0.0</GyroRWStd>
+        <AccBiasStd>0.0</AccBiasStd>
+        <GyroBiasStd>0.0</GyroBiasStd>
+        <AccSFStd>0.0</AccSFStd>
+        <GyroSFStd>0.0</GyroSFStd>
+        <frameName>imu_link_ideal</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+    </link>
+
+    <joint name='imu_link_ideal_joint' type='fixed'>
+      <pose>0.0 0.0 0.0 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>imu_link_ideal</child>
     </joint>
 
     <link name="gps_link">
