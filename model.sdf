@@ -725,7 +725,7 @@
         </inertia>
       </inertial>      
       
-      <sensor name="my_gps" type="gps">
+      <sensor name="gps_plugin" type="gps">
         <always_on>true</always_on>
         <update_rate>5</update_rate>
         <gps>
@@ -744,7 +744,7 @@
             </vertical>
           </position_sensing>
         </gps>
-        <plugin name="my_gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+        <plugin name="gps_plugin" filename="libgazebo_ros_gps_sensor.so">
           <ros>
             <namespace>kobra_mk5</namespace>
             <remapping>~/out:=gps_data</remapping>
@@ -768,7 +768,7 @@
         </inertia>
       </inertial>      
       
-      <sensor name="my_gps_ideal" type="gps">
+      <sensor name="gps_plugin_ideal" type="gps">
         <always_on>true</always_on>
         <update_rate>25</update_rate>
         <gps>
@@ -787,7 +787,7 @@
             </vertical>
           </position_sensing>
         </gps>
-        <plugin name="my_gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+        <plugin name="gps_plugin_ideal" filename="libgazebo_ros_gps_sensor.so">
           <ros>
             <namespace>kobra_mk5</namespace>
             <remapping>~/out:=ideal_gps_data</remapping>
