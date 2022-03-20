@@ -635,11 +635,55 @@
       <update_rate>100</update_rate>
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0</stddev>  
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0</stddev> 
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0</stddev> 
+            </noise>
+          </z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0</stddev>  
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0</stddev>  
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0</stddev> 
+            </noise>
+          </z>
+        </linear_acceleration>
+      </imu>
       <plugin filename="libht_nav_gazebo_ros_imu_sensor.so" name="imu_plugin">
         <ros>
           <namespace>kobra_mk5</namespace>
           <remapping>imu_plugin/out:=imu_data</remapping> 
+          <remapping>imu_plugin/out_ideal:=imu_data_ideal</remapping> 
         </ros>
+        <initial_orientation_as_reference>false</initial_orientation_as_reference>
         <!-- <topicName>imu</topicName> -->
         <bodyName>imu_link</bodyName>
         <updateRateHZ>100.0</updateRateHZ>
@@ -664,7 +708,7 @@
     </joint>
 
 
-    <link name="imu_link_ideal">
+    <!-- <link name="imu_link_ideal">
       <pose relative_to="chassis">0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -690,7 +734,6 @@
           <namespace>kobra_mk5</namespace>
           <remapping>imu_plugin_ideal/out:=imu_data_ideal</remapping> 
         </ros>
-        <!-- <topicName>imu</topicName> -->
         <bodyName>imu_link_ideal</bodyName>
         <updateRateHZ>100.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>  
@@ -711,7 +754,7 @@
       <pose>0.0 0.0 0.0 0 0 0</pose>
       <parent>chassis</parent>
       <child>imu_link_ideal</child>
-    </joint>
+    </joint> -->
 
     <link name="gps_link">
       <pose relative_to="chassis">0 0 0 0 0 0</pose>
