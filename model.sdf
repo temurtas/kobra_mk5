@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
   <model name="kobra_mk5">
-    <pose>0 0 0.03 0 0 0</pose>
+    <pose>0 0 0.0 0 0 0</pose>
     <link name="chassis">
       <inertial>
         <mass>1326.0</mass>
-        <pose>0 -0.266 0.48 0 0 0</pose>
+        <!-- <pose>0 -0.266 0.48 0 0 0</pose> -->
         <inertia>
           <ixx>2581.13354740</ixx>
           <ixy>0.0</ixy>
@@ -522,6 +522,9 @@
       </axis>
       <physics>
         <ode>
+          <solver>
+            <iters>10</iters>
+          </solver>
           <cfm_damping>1</cfm_damping>
         </ode>
       </physics>
@@ -543,6 +546,29 @@
         <wheel_normal_force>100</wheel_normal_force>
       </wheel>
     </plugin> -->
+
+    <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
+      <wheel link_name="front_left_wheel">
+        <slip_compliance_lateral>0.01</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.00125</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="front_right_wheel">
+        <slip_compliance_lateral>0.01</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.00125</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="rear_left_wheel">
+        <slip_compliance_lateral>0.0</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.0125</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="rear_right_wheel">
+        <slip_compliance_lateral>0.0</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.0125</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+    </plugin>
 
     <!-- <plugin name='ackermann_drive' filename='libgazebo_ros_ackermann_drive.so'> -->
     <!-- <plugin name='ackermann_drive' filename='libht_nav_gazebo_ros_ackermann_drive.so'> -->
@@ -600,6 +626,19 @@
     -->
 
         
+    <plugin name="ht_link_state_pub" filename="libht_nav_gazebo_ros_link_state_publisher.so">
+      <ros>
+        <namespace>kobra_mk5</namespace>
+        <!-- <remapping>~/out:=link_states</remapping> -->
+      </ros>
+      <update_rate>100</update_rate>
+      <front_right_wheel>front_right_wheel</front_right_wheel>
+      <front_left_wheel>front_left_wheel</front_left_wheel>
+      <rear_right_wheel>rear_right_wheel</rear_right_wheel>
+      <rear_left_wheel>rear_left_wheel</rear_left_wheel>
+      <imu_link>imu_link</imu_link>
+    </plugin>
+
     <plugin name="ht_joint_state_pub" filename="libht_nav_gazebo_ros_joint_state_publisher.so">
       <ros>
         <namespace>kobra_mk5</namespace>
@@ -614,7 +653,8 @@
     </plugin>
 
     <link name="imu_link">
-      <pose relative_to="chassis">0 0 0 0 0 0</pose>
+      <!-- Position of the imu link was moved to front axle -->
+      <pose relative_to="chassis">0 1.45 0.3 0 0 0</pose> 
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>1e-5</mass>
@@ -627,7 +667,7 @@
           <izz>1e-6</izz>
         </inertia>
       </inertial>      
-   
+
     <gravity>true</gravity>
 
     <sensor name="imu_sensor" type="imu">
@@ -687,7 +727,6 @@
         <!-- <topicName>imu</topicName> -->
         <bodyName>imu_link</bodyName>
         <updateRateHZ>100.0</updateRateHZ>
-        <gaussianNoise>0.0</gaussianNoise>  
         <AccRWStd>0.065</AccRWStd>
         <GyroRWStd>0.125</GyroRWStd>
         <AccBiasStd>1.0</AccBiasStd>
@@ -699,7 +738,9 @@
       </plugin>
       <pose>0 0 0 0 0 0</pose>
     </sensor>
+
     </link>
+
 
     <joint name='imu_link_joint' type='fixed'>
       <pose>0.0 0.0 0.0 0 0 0</pose>
@@ -756,8 +797,57 @@
       <child>imu_link_ideal</child>
     </joint> -->
 
-    <link name="gps_link">
+    <!-- <link name="gps_link">
       <pose relative_to="chassis">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>1e-5</mass>
+        <inertia>
+          <ixx>1e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-6</iyy>
+          <iyz>0</iyz>
+          <izz>1e-6</izz>
+        </inertia>
+      </inertial>      
+    </link> -->
+    
+    <!-- <link name="ideal_gps_link">
+      <pose relative_to="chassis">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 1.45 0.3 0 0 0</pose>
+        <mass>1e-5</mass>
+        <inertia>
+          <ixx>1e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-6</iyy>
+          <iyz>0</iyz>
+          <izz>1e-6</izz>
+        </inertia>
+      </inertial>      
+      
+      <sensor name="ideal_gps_plugin" type="gps">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        </gps> 
+        <plugin name="ideal_gps_plugin" filename="libht_nav_gazebo_ros_gps_sensor.so">
+          <ros>
+            <namespace>kobra_mk5</namespace>
+            <remapping>~/out:=ideal_gps_data</remapping>
+          </ros>
+          <updateRateHZ>100.0</updateRateHZ>  
+          <posDriftFreq>0.0</posDriftFreq>  
+          <gaussianNoise>0.0</gaussianNoise>  
+          <posBiasStd>0.0</posBiasStd>  
+          <posDriftStd>0.0</posDriftStd>  
+        </plugin>
+      </sensor>
+    </link>    -->
+
+    <link name="gps_link">
+      <pose>0 1.45 0.3 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>1e-5</mass>
@@ -774,33 +864,67 @@
       <sensor name="gps_plugin" type="gps">
         <always_on>true</always_on>
         <update_rate>5</update_rate>
-        <gps>
+        <!-- <gps>
           <position_sensing>
             <horizontal>
               <noise type="gaussian">
                 <mean>0.0</mean>
-                <stddev>2.0e-1</stddev>  <!-- 2 m  at 1/10 scale -->
+                <stddev>2.0e-1</stddev>  
               </noise>
             </horizontal>
             <vertical>
               <noise type="gaussian">
                 <mean>0.0</mean>  
-                <stddev>1.75e-6</stddev> <!-- 2.15e-5 - 2 m at 1/10 scale -->
+                <stddev>1.75e-6</stddev> 
               </noise>
             </vertical>
           </position_sensing>
-        </gps>
-        <plugin name="gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+        </gps> -->
+        <plugin name="gps_plugin" filename="libht_nav_gazebo_ros_gps_sensor.so">
           <ros>
             <namespace>kobra_mk5</namespace>
             <remapping>~/out:=gps_data</remapping>
           </ros>
+          <updateRateHZ>5.0</updateRateHZ>  
+          <posDriftFreq>500.0</posDriftFreq>  
+          <gaussianNoise>0.0</gaussianNoise>  
+          <posBiasStd>0.00</posBiasStd>  
+          <posDriftStd>1.5</posDriftStd>  
         </plugin>
       </sensor>
-    </link>
+    </link>    
+      
+    <!-- <sensor name="gps_plugin_ideal" type="gps">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <gps>
+        <position_sensing>
+          <horizontal>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0</stddev> 
+            </noise>
+          </horizontal>
+          <vertical>
+            <noise type="gaussian">
+              <mean>0.0</mean>  
+              <stddev>0.0</stddev> 
+            </noise>
+          </vertical>
+        </position_sensing>
+      </gps>
+      <plugin name="gps_plugin_ideal" filename="libgazebo_ros_gps_sensor.so">
+        <ros>
+          <namespace>kobra_mk5</namespace>
+          <remapping>~/out:=ideal_gps_data</remapping>
+        </ros>
+        <bodyname>gps_link</bodyname>
+      </plugin>
+    </sensor> -->
+  
 
     <link name="gps_link_ideal">
-      <pose relative_to="chassis">0 0 0 0 0 0</pose>
+      <pose>0 1.45 0.3 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>1e-5</mass>
@@ -816,23 +940,7 @@
       
       <sensor name="gps_plugin_ideal" type="gps">
         <always_on>true</always_on>
-        <update_rate>100</update_rate>
-        <gps>
-          <position_sensing>
-            <horizontal>
-              <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>0.0</stddev>  <!-- 2 m -->
-              </noise>
-            </horizontal>
-            <vertical>
-              <noise type="gaussian">
-                <mean>0.0</mean>  
-                <stddev>0.0</stddev> <!-- 2.15e-5 - 2 m -->
-              </noise>
-            </vertical>
-          </position_sensing>
-        </gps>
+        <update_rate>100</update_rate> -->
         <plugin name="gps_plugin_ideal" filename="libgazebo_ros_gps_sensor.so">
           <ros>
             <namespace>kobra_mk5</namespace>
