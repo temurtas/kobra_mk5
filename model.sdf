@@ -5,7 +5,7 @@
     <link name="chassis">
       <inertial>
         <mass>1326.0</mass>
-        <!-- <pose>0 -0.266 0.48 0 0 0</pose> -->
+        <pose>0 0 0 0 0 0</pose>
         <inertia>
           <ixx>2581.13354740</ixx>
           <ixy>0.0</ixy>
@@ -55,7 +55,7 @@
         </geometry>
       </visual>
 
-      <collision name="chassis">
+      <collision name="chassis_collision">
         <pose>0.0 0.05 0.625 0 0 0</pose>
         <geometry>
           <box>
@@ -520,14 +520,14 @@
         </dynamics>
         <use_parent_model_frame>true</use_parent_model_frame>
       </axis>
-      <physics>
+      <!-- <physics>
         <ode>
           <solver>
             <iters>10</iters>
           </solver>
           <cfm_damping>1</cfm_damping>
         </ode>
-      </physics>
+      </physics> -->
     </joint>
 
     <!-- Plugin to set wheel slip parameters according to wheel speed -->
@@ -550,22 +550,22 @@
     <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
       <wheel link_name="front_left_wheel">
         <slip_compliance_lateral>0.01</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.00125</slip_compliance_longitudinal>
+        <slip_compliance_longitudinal>0.005</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
       <wheel link_name="front_right_wheel">
         <slip_compliance_lateral>0.01</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.00125</slip_compliance_longitudinal>
+        <slip_compliance_longitudinal>0.005</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
       <wheel link_name="rear_left_wheel">
-        <slip_compliance_lateral>0.0</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.0125</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.01</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
       <wheel link_name="rear_right_wheel">
-        <slip_compliance_lateral>0.0</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.0125</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.01</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
     </plugin>
@@ -582,7 +582,7 @@
         <remapping>distance:=distance</remapping>
       </ros>
 
-      <update_rate>100.0</update_rate>
+      <update_rate>400.0</update_rate>
 
       <!-- wheels -->
       <front_left_joint>front_left_combined_joint</front_left_joint>
@@ -595,21 +595,21 @@
 
       <!-- Max absolute steer angle for tyre in radians-->
       <!-- Any cmd_vel angular z greater than this would be capped -->
-      <max_steer>0.6458</max_steer>
+      <max_steer>1.0</max_steer>
 
       <!-- Max absolute steering angle of steering wheel -->
-      <max_steering_angle>7.85</max_steering_angle>
+      <max_steering_angle>45.85</max_steering_angle>
 
       <!-- Max absolute linear speed in m/s -->
-      <max_speed>40</max_speed>
+      <max_speed>100</max_speed>
 
       <!-- PID tuning -->
-      <left_steering_pid_gain>750 0 1</left_steering_pid_gain>
-      <left_steering_i_range>0 0</left_steering_i_range>
-      <right_steering_pid_gain>750 0 1</right_steering_pid_gain>
-      <right_steering_i_range>0 0</right_steering_i_range>
-      <linear_velocity_pid_gain>250 0 1</linear_velocity_pid_gain>
-      <linear_velocity_i_range>0 0</linear_velocity_i_range>
+      <left_steering_pid_gain>1500 500 10</left_steering_pid_gain>
+      <left_steering_i_range>5 0</left_steering_i_range>
+      <right_steering_pid_gain>1500 500 1*</right_steering_pid_gain>
+      <right_steering_i_range>5 0</right_steering_i_range>
+      <linear_velocity_pid_gain>200 1 1</linear_velocity_pid_gain>
+      <linear_velocity_i_range>1 0</linear_velocity_i_range>
 
       <!-- output -->
       <publish_odom>true</publish_odom>
@@ -625,6 +625,13 @@
     <plugin name="ht_joint_pubsub" filename="libht_joint_pubsub.so"/>
     -->
 
+    <plugin name="ht_link_gps_pub" filename="libht_nav_gazebo_ros_link_gps_publisher.so">
+      <ros>
+        <namespace>kobra_mk5</namespace>
+      </ros>
+      <update_rate>5</update_rate>
+      <imu_link>imu_link</imu_link>
+    </plugin>
         
     <plugin name="ht_link_state_pub" filename="libht_nav_gazebo_ros_link_state_publisher.so">
       <ros>
@@ -727,10 +734,14 @@
         <!-- <topicName>imu</topicName> -->
         <bodyName>imu_link</bodyName>
         <updateRateHZ>100.0</updateRateHZ>
-        <AccRWStd>0.065</AccRWStd>
+        <AccRWStd>0.0</AccRWStd>
+        <GyroRWStd>0.0</GyroRWStd>
+        <AccBiasStd>0.0</AccBiasStd>
+        <GyroBiasStd>0.0</GyroBiasStd>
+        <!-- <AccRWStd>0.065</AccRWStd>
         <GyroRWStd>0.125</GyroRWStd>
         <AccBiasStd>1.0</AccBiasStd>
-        <GyroBiasStd>1.0</GyroBiasStd>
+        <GyroBiasStd>1.0</GyroBiasStd> -->
         <AccSFStd>0.0</AccSFStd>
         <GyroSFStd>0.0</GyroSFStd>
         <frameName>imu_link</frameName>
@@ -743,7 +754,7 @@
 
 
     <joint name='imu_link_joint' type='fixed'>
-      <pose>0.0 0.0 0.0 0 0 0</pose>
+      <pose>0 1.45 0.3 0 0 0</pose>
       <parent>chassis</parent>
       <child>imu_link</child>
     </joint>
