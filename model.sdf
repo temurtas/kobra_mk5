@@ -212,7 +212,7 @@
         <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
         <geometry>
           <sphere>
-            <radius>0.31265</radius>
+            <radius>0.31266</radius>
           </sphere>
         </geometry>
         <surface>
@@ -625,12 +625,45 @@
     <plugin name="ht_joint_pubsub" filename="libht_joint_pubsub.so"/>
     -->
 
+    <plugin name="ht_link_imu_pub" filename="libht_nav_gazebo_ros_link_imu_publisher.so">
+      <ros>
+        <namespace>kobra_mk5</namespace>
+        <!-- <remapping>imu_data_body:=imu_data</remapping>  -->
+      </ros>
+      <!-- # GPS Error Modelling Specs (ROS-2 Part)
+      config.updateRateHZ = 5.0
+      config.posDriftFreq = 500.0;
+      config.posBiasStd   = 0.25; 
+      config.posDriftStd  = 1.5; 
+      config.velErrStd    = 0.10;  
+      -->
+      <update_rate>100</update_rate>
+      <imu_link>imu_link</imu_link>
+      <!-- <posDriftFreq>500.0</posDriftFreq>   -->
+      <!-- <gaussianNoise>0.0</gaussianNoise>   -->
+      <!-- <posBiasStd>0.25</posBiasStd>   -->
+      <!-- <posDriftStd>1.5</posDriftStd>   -->
+      <!-- <velErrStd>0.10</velErrStd>   -->
+    </plugin>
+
     <plugin name="ht_link_gps_pub" filename="libht_nav_gazebo_ros_link_gps_publisher.so">
       <ros>
         <namespace>kobra_mk5</namespace>
       </ros>
+      <!-- # GPS Error Modelling Specs (ROS-2 Part)
+      config.updateRateHZ = 5.0
+      config.posDriftFreq = 500.0;
+      config.posBiasStd   = 0.25; 
+      config.posDriftStd  = 1.5; 
+      config.velErrStd    = 0.10;  
+      -->
       <update_rate>5</update_rate>
       <imu_link>imu_link</imu_link>
+      <posDriftFreq>500.0</posDriftFreq>  
+      <gaussianNoise>0.0</gaussianNoise>  
+      <posBiasStd>0.25</posBiasStd>  
+      <posDriftStd>1.5</posDriftStd>  
+      <velErrStd>0.10</velErrStd>  
     </plugin>
         
     <plugin name="ht_link_state_pub" filename="libht_nav_gazebo_ros_link_state_publisher.so">
@@ -660,18 +693,18 @@
     </plugin>
 
     <link name="imu_link">
-      <!-- Position of the imu link was moved to front axle -->
+      <!-- Position of the imu link was moved to rear axle -->
       <pose relative_to="chassis">0 1.45 0.3 0 0 0</pose> 
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>1e-5</mass>
+        <mass>1e-8</mass>
         <inertia>
-          <ixx>1e-6</ixx>
+          <ixx>1e-10</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>1e-6</iyy>
+          <iyy>1e-10</iyy>
           <iyz>0</iyz>
-          <izz>1e-6</izz>
+          <izz>1e-10</izz>
         </inertia>
       </inertial>      
 
@@ -734,10 +767,27 @@
         <!-- <topicName>imu</topicName> -->
         <bodyName>imu_link</bodyName>
         <updateRateHZ>100.0</updateRateHZ>
-        <AccRWStd>0.0</AccRWStd>
-        <GyroRWStd>0.0</GyroRWStd>
-        <AccBiasStd>0.0</AccBiasStd>
-        <GyroBiasStd>0.0</GyroBiasStd>
+        <!-- # IMU Modelling Specs (ROS-2 Part)
+        acc_bias_std    = 5.0   #1.0  # mg 
+        gyro_drift_std  = 10.0  #1.0   # deg/hr
+
+        acc_bias_stab_std   = 0.5    # mg 
+        gyro_drift_stab_std = 1.0    # deg/hr
+        acc_bias_stab_tc    = 1500   # sec
+        gyro_drift_stab_tc  = 1500   # sec
+
+        acc_sf_std   = 0.0  # ppm
+        gyro_sf_std  = 0.0  # ppm
+        acc_mis_std  = 0.0  # rad
+        gyro_mis_std = 0.0  # rad
+
+        acc_rw_std  = 0.06  # 0.065; % ft/s/rt-hr
+        gyro_rw_std = 0.125 # 0.125; % deg/rt-hr  
+        -->
+        <AccRWStd>0.06</AccRWStd>
+        <GyroRWStd>0.125</GyroRWStd>
+        <AccBiasStd>5.0</AccBiasStd>
+        <GyroBiasStd>10.0</GyroBiasStd>
         <!-- <AccRWStd>0.065</AccRWStd>
         <GyroRWStd>0.125</GyroRWStd>
         <AccBiasStd>1.0</AccBiasStd>
