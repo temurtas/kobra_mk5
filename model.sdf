@@ -194,7 +194,7 @@
         </inertia>
       </inertial>
 
-      <visual name="visual">
+      <visual name="front_left_wheel_visual">
         <pose>0.04 0.0 0.0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -208,7 +208,7 @@
         </geometry>
       </visual>
 
-      <collision name="collision">
+      <collision name="front_left_wheel_collision">
         <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
         <geometry>
           <sphere>
@@ -233,6 +233,55 @@
         </surface>
 
       </collision>
+      
+      <!-- <sensor name='my_contact' type='contact'>
+        <plugin name="contact_plugin" filename="libht_nav_gazebo_ros_contact_sensor.so"> -->
+          <!-- Change namespace and topics so:
+              Bumper state is published to: /custom_ns/custom_topic
+          -->
+          <!-- <ros>
+            <namespace>custom_ns</namespace>
+            <remapping>bumper_states:=custom_topic</remapping>
+          </ros> -->
+          <!-- <frameName>front_left_wheel</frameName> -->
+
+          <!-- Set TF frame name. Defaults to world -->
+          <!-- <frame_name>custom_frame</frame_name> -->
+        <!-- </plugin>
+      </sensor>  -->
+    <sensor name="fl_bumper_plugin" type="contact">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <contact>
+        <collision>front_left_wheel_collision</collision>
+      </contact>
+      <plugin name="fl_bumper_plugin" filename="libgazebo_ros_bumper.so">
+        <ros>
+          <namespace>kobra_mk5</namespace>
+          <remapping>bumper_states:=front_left_contact_forces</remapping>
+        </ros>
+        <bumperTopicName>bumper_topic</bumperTopicName>
+        <frameName>front_left_wheel</frameName>
+      </plugin>
+    </sensor>
+
+    <!-- <sensor name="contact_sensor" type="contact">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <contact>
+        <collision>front_left_wheel_collision</collision>
+      </contact>
+      <plugin name="contact_sensor_plugin" filename="libht_nav_gazebo_ros_contact_sensor.so">
+        <bumperTopicName>fixed_jaw_contact_sensor_state</bumperTopicName>
+        <frameName>gripper_fixed_jaw</frameName>
+      </plugin>
+    </sensor> -->
+
+      <!-- <sensor name='my_contact' type='contact'>
+        <contact>
+          <collision>collision</collision>
+        </contact>
+      </sensor> -->
     </link>
 
     <link name="front_right_wheel">
@@ -248,7 +297,7 @@
           <izz>0.33552910</izz>
         </inertia>
       </inertial>
-      <visual name="visual">
+      <visual name="front_right_wheel_visual">
         <pose>-0.04 0.0 0.0 0 0 0</pose>
         <pose>0 0 0.0 0 0 0</pose>
         <geometry>
@@ -263,7 +312,7 @@
         </geometry>
       </visual>
 
-      <collision name="collision">
+      <collision name="front_right_wheel_collision">
         <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
         <geometry>
           <sphere>
@@ -288,6 +337,23 @@
         </surface>
 
       </collision>
+
+      <sensor name="fr_bumper_plugin" type="contact">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <contact>
+          <collision>front_right_wheel_collision</collision>
+        </contact>
+        <plugin name="fr_bumper_plugin" filename="libgazebo_ros_bumper.so">
+          <ros>
+            <namespace>kobra_mk5</namespace>
+            <remapping>bumper_states:=front_right_contact_forces</remapping>
+          </ros>
+          <bumperTopicName>bumper_topic</bumperTopicName>
+          <frameName>front_right_wheel</frameName>
+        </plugin>
+      </sensor>
+
     </link>
 
 
@@ -305,7 +371,7 @@
         </inertia>
       </inertial>
 
-      <visual name="visual">
+      <visual name="rear_left_wheel_visual">
         <pose>0.04 0.0 0.0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -319,7 +385,7 @@
         </geometry>
       </visual>
 
-      <collision name="collision">
+      <collision name="rear_left_wheel_collision">
         <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
         <geometry>
           <sphere>
@@ -344,6 +410,23 @@
         </surface>
 
       </collision>
+
+      <sensor name="rl_bumper_plugin" type="contact">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <contact>
+          <collision>rear_left_wheel_collision</collision>
+        </contact>
+        <plugin name="rl_bumper_plugin" filename="libgazebo_ros_bumper.so">
+          <ros>
+            <namespace>kobra_mk5</namespace>
+            <remapping>bumper_states:=rear_left_contact_forces</remapping>
+          </ros>
+          <bumperTopicName>bumper_topic</bumperTopicName>
+          <frameName>rear_left_wheel</frameName>
+        </plugin>
+      </sensor>
+
     </link>
 
     <link name="rear_right_wheel">
@@ -359,7 +442,7 @@
           <izz>0.33552910</izz>
         </inertia>
       </inertial>
-      <visual name="visual">
+      <visual name="rear_right_wheel_visual">
         <pose>-0.04 0.0 0.0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -373,7 +456,7 @@
         </geometry>
       </visual>
 
-      <collision name="collision">
+      <collision name="rear_right_wheel_collision">
         <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
         <geometry>
           <sphere>
@@ -397,6 +480,23 @@
           </contact>
         </surface>
       </collision>
+            
+      <sensor name="rr_bumper_plugin" type="contact">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <contact>
+          <collision>rear_right_wheel_collision</collision>
+        </contact>
+        <plugin name="rr_bumper_plugin" filename="libgazebo_ros_bumper.so">
+          <ros>
+            <namespace>kobra_mk5</namespace>
+            <remapping>bumper_states:=rear_right_contact_forces</remapping>
+          </ros>
+          <bumperTopicName>bumper_topic</bumperTopicName>
+          <frameName>rear_right_wheel</frameName>
+        </plugin>
+      </sensor>
+
     </link>
 
     <joint type="universal" name="front_left_combined_joint">
@@ -549,26 +649,50 @@
 
     <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
       <wheel link_name="front_left_wheel">
-        <slip_compliance_lateral>0.01</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.005</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.15</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
       <wheel link_name="front_right_wheel">
-        <slip_compliance_lateral>0.01</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.005</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.15</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
       <wheel link_name="rear_left_wheel">
         <slip_compliance_lateral>0.01</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <slip_compliance_longitudinal>0.15</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
       <wheel link_name="rear_right_wheel">
         <slip_compliance_lateral>0.01</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <slip_compliance_longitudinal>0.15</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
     </plugin>
+
+
+    <!-- <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
+      <wheel link_name="front_left_wheel">
+        <slip_compliance_lateral>0.1</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.15</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="front_right_wheel">
+        <slip_compliance_lateral>0.1</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.15</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="rear_left_wheel">
+        <slip_compliance_lateral>0</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="rear_right_wheel">
+        <slip_compliance_lateral>0</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+    </plugin> -->
 
     <!-- <plugin name='ackermann_drive' filename='libgazebo_ros_ackermann_drive.so'> -->
     <!-- <plugin name='ackermann_drive' filename='libht_nav_gazebo_ros_ackermann_drive.so'> -->
@@ -604,11 +728,11 @@
       <max_speed>100</max_speed>
 
       <!-- PID tuning -->
-      <left_steering_pid_gain>1500 500 10</left_steering_pid_gain>
+      <left_steering_pid_gain>20000 500 10</left_steering_pid_gain>
       <left_steering_i_range>5 0</left_steering_i_range>
-      <right_steering_pid_gain>1500 500 1*</right_steering_pid_gain>
+      <right_steering_pid_gain>20000 500 10</right_steering_pid_gain>
       <right_steering_i_range>5 0</right_steering_i_range>
-      <linear_velocity_pid_gain>200 1 1</linear_velocity_pid_gain>
+      <linear_velocity_pid_gain>400 1 1</linear_velocity_pid_gain>
       <linear_velocity_i_range>1 0</linear_velocity_i_range>
 
       <!-- output -->
@@ -620,6 +744,37 @@
       <odometry_frame>odom_demo</odometry_frame>
       <robot_base_frame>chassis</robot_base_frame>
     </plugin>
+    
+    <!-- <plugin name='front_ackermann_drive' filename='libht_nav_gazebo_ros_ackermann_drive.so'>
+
+      <ros>
+        <namespace>kobra_mk5</namespace>
+      </ros>
+
+      <update_rate>400.0</update_rate>
+
+      <front_left_joint>front_left_combined_joint</front_left_joint>
+      <front_right_joint>front_right_combined_joint</front_right_joint>
+      <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
+      <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
+      <left_steering_joint>front_left_combined_joint</left_steering_joint>
+      <right_steering_joint>front_right_combined_joint</right_steering_joint>
+      <steering_wheel_joint>steering_joint</steering_wheel_joint>
+
+      <max_steer>1.0</max_steer>
+
+      <max_steering_angle>45.85</max_steering_angle>
+
+      <max_speed>100</max_speed>
+
+      <left_steering_pid_gain>1500 500 10</left_steering_pid_gain>
+      <left_steering_i_range>5 0</left_steering_i_range>
+      <right_steering_pid_gain>1500 500 1*</right_steering_pid_gain>
+      <right_steering_i_range>5 0</right_steering_i_range>
+      <linear_velocity_pid_gain>200 1 1</linear_velocity_pid_gain>
+      <linear_velocity_i_range>1 0</linear_velocity_i_range>
+
+    </plugin> -->
 
     <!-- 
     <plugin name="ht_joint_pubsub" filename="libht_joint_pubsub.so"/>
@@ -630,20 +785,36 @@
         <namespace>kobra_mk5</namespace>
         <!-- <remapping>imu_data_body:=imu_data</remapping>  -->
       </ros>
-      <!-- # GPS Error Modelling Specs (ROS-2 Part)
-      config.updateRateHZ = 5.0
-      config.posDriftFreq = 500.0;
-      config.posBiasStd   = 0.25; 
-      config.posDriftStd  = 1.5; 
-      config.velErrStd    = 0.10;  
-      -->
-      <update_rate>100</update_rate>
       <imu_link>imu_link</imu_link>
-      <!-- <posDriftFreq>500.0</posDriftFreq>   -->
-      <!-- <gaussianNoise>0.0</gaussianNoise>   -->
-      <!-- <posBiasStd>0.25</posBiasStd>   -->
-      <!-- <posDriftStd>1.5</posDriftStd>   -->
-      <!-- <velErrStd>0.10</velErrStd>   -->
+      <update_rate>100</update_rate>
+      <updateRateHZ>100.0</updateRateHZ>
+      <!-- # IMU Modelling Specs (ROS-2 Part)
+      acc_bias_std    = 5.0   #1.0  # mg 
+      gyro_drift_std  = 10.0  #1.0   # deg/hr
+
+      acc_bias_stab_std   = 0.5    # mg 
+      gyro_drift_stab_std = 1.0    # deg/hr
+      acc_bias_stab_tc    = 1500   # sec
+      gyro_drift_stab_tc  = 1500   # sec
+
+      acc_sf_std   = 0.0  # ppm
+      gyro_sf_std  = 0.0  # ppm
+      acc_mis_std  = 0.0  # rad
+      gyro_mis_std = 0.0  # rad
+
+      acc_rw_std  = 0.06  # 0.065; % ft/s/rt-hr
+      gyro_rw_std = 0.125 # 0.125; % deg/rt-hr  
+      -->
+      <AccRWStd>0.06</AccRWStd>
+      <GyroRWStd>0.125</GyroRWStd>
+      <AccBiasStd>5.0</AccBiasStd>
+      <GyroBiasStd>1.0</GyroBiasStd>
+      <!-- <AccRWStd>0.065</AccRWStd>
+      <GyroRWStd>0.125</GyroRWStd>
+      <AccBiasStd>1.0</AccBiasStd>
+      <GyroBiasStd>1.0</GyroBiasStd> -->
+      <AccSFStd>0.0</AccSFStd>
+      <GyroSFStd>0.0</GyroSFStd>
     </plugin>
 
     <plugin name="ht_link_gps_pub" filename="libht_nav_gazebo_ros_link_gps_publisher.so">
@@ -684,7 +855,7 @@
         <namespace>kobra_mk5</namespace>
         <remapping>~/out:=joint_states</remapping>
       </ros>
-      <update_rate>100</update_rate>
+      <update_rate>25</update_rate>
       <joint_name>front_left_combined_joint</joint_name>
       <joint_name>front_right_combined_joint</joint_name>
       <joint_name>rear_left_wheel_joint</joint_name>
@@ -710,7 +881,7 @@
 
     <gravity>true</gravity>
 
-    <sensor name="imu_sensor" type="imu">
+    <!-- <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
       <update_rate>100</update_rate>
       <visualize>true</visualize>
@@ -764,10 +935,10 @@
           <remapping>imu_plugin/out_ideal:=imu_data_ideal</remapping> 
         </ros>
         <initial_orientation_as_reference>false</initial_orientation_as_reference>
-        <!-- <topicName>imu</topicName> -->
+        was commented <topicName>imu</topicName> was commented
         <bodyName>imu_link</bodyName>
         <updateRateHZ>100.0</updateRateHZ>
-        <!-- # IMU Modelling Specs (ROS-2 Part)
+        was commented # IMU Modelling Specs (ROS-2 Part)
         acc_bias_std    = 5.0   #1.0  # mg 
         gyro_drift_std  = 10.0  #1.0   # deg/hr
 
@@ -783,22 +954,22 @@
 
         acc_rw_std  = 0.06  # 0.065; % ft/s/rt-hr
         gyro_rw_std = 0.125 # 0.125; % deg/rt-hr  
-        -->
+        was commented
         <AccRWStd>0.06</AccRWStd>
         <GyroRWStd>0.125</GyroRWStd>
         <AccBiasStd>5.0</AccBiasStd>
         <GyroBiasStd>10.0</GyroBiasStd>
-        <!-- <AccRWStd>0.065</AccRWStd>
+        was commented <AccRWStd>0.065</AccRWStd>
         <GyroRWStd>0.125</GyroRWStd>
         <AccBiasStd>1.0</AccBiasStd>
-        <GyroBiasStd>1.0</GyroBiasStd> -->
+        <GyroBiasStd>1.0</GyroBiasStd> was commented
         <AccSFStd>0.0</AccSFStd>
         <GyroSFStd>0.0</GyroSFStd>
         <frameName>imu_link</frameName>
         <initialOrientationAsReference>false</initialOrientationAsReference>
       </plugin>
       <pose>0 0 0 0 0 0</pose>
-    </sensor>
+    </sensor> -->
 
     </link>
 
@@ -813,9 +984,7 @@
     <!-- <link name="imu_link_ideal">
       <pose relative_to="chassis">0 0 0 0 0 0</pose>
       <inertial>
-        <pose>0 0 0 0 0 0</pose>
-        <mass>1e-5</mass>
-        <inertia>
+        <pose>0 0 0 0 0 0</pose>link
           <ixx>1e-6</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
@@ -922,10 +1091,10 @@
         </inertia>
       </inertial>      
       
-      <sensor name="gps_plugin" type="gps">
+      <!-- <sensor name="gps_plugin" type="gps">
         <always_on>true</always_on>
         <update_rate>5</update_rate>
-        <!-- <gps>
+        was commented <gps>
           <position_sensing>
             <horizontal>
               <noise type="gaussian">
@@ -940,7 +1109,7 @@
               </noise>
             </vertical>
           </position_sensing>
-        </gps> -->
+        </gps> was commented
         <plugin name="gps_plugin" filename="libht_nav_gazebo_ros_gps_sensor.so">
           <ros>
             <namespace>kobra_mk5</namespace>
@@ -952,7 +1121,7 @@
           <posBiasStd>0.00</posBiasStd>  
           <posDriftStd>1.5</posDriftStd>  
         </plugin>
-      </sensor>
+      </sensor> -->
     </link>    
       
     <!-- <sensor name="gps_plugin_ideal" type="gps">
@@ -984,7 +1153,7 @@
     </sensor> -->
   
 
-    <link name="gps_link_ideal">
+    <!-- <link name="gps_link_ideal">
       <pose>0 1.45 0.3 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -1001,7 +1170,7 @@
       
       <sensor name="gps_plugin_ideal" type="gps">
         <always_on>true</always_on>
-        <update_rate>100</update_rate> -->
+        <update_rate>100</update_rate> 
         <plugin name="gps_plugin_ideal" filename="libgazebo_ros_gps_sensor.so">
           <ros>
             <namespace>kobra_mk5</namespace>
@@ -1021,7 +1190,7 @@
       <pose>0.0 0.0 0.0 0 0 0</pose>
       <parent>chassis</parent>
       <child>gps_link_ideal</child>
-    </joint>
+    </joint> -->
     
     <link name="camera_link">
       <pose relative_to="chassis">0 -0.35 1.5 0 0 -1.57079</pose>
