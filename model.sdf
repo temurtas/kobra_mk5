@@ -181,7 +181,7 @@
     </link>
 
     <link name="front_left_wheel">
-      <pose>0.76 -1.41 0.3 0 0 0</pose>
+      <pose>0.76 -1.41 0.31265 0 0 0</pose>
       <inertial>
         <mass>11</mass>
         <inertia>
@@ -195,7 +195,7 @@
       </inertial>
 
       <visual name="front_left_wheel_visual">
-        <pose>0.04 0.0 0.0 0 0 0</pose>
+        <pose>0 0 0.0 0 0 0</pose>
         <geometry>
           <mesh>
             <uri>model://prius_hybrid/meshes/Hybrid.obj</uri>
@@ -212,16 +212,20 @@
         <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
         <geometry>
           <sphere>
-            <radius>0.31266</radius>
+            <radius>0.31265</radius>
           </sphere>
+          <!-- <cylinder>
+            <radius>0.31265</radius>
+            <length>0.055</length>
+          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <mu>9.9</mu>
-              <mu2>9.9</mu2>
-              <slip1>0.0</slip1>
-              <slip2>0.0</slip2>
+              <mu>10</mu>
+              <mu2>10</mu2>
+              <slip1>0.01</slip1>
+              <slip2>0.01</slip2>
             </ode>
           </friction>
           <contact>
@@ -249,21 +253,21 @@
           <!-- <frame_name>custom_frame</frame_name> -->
         <!-- </plugin>
       </sensor>  -->
-    <sensor name="fl_bumper_plugin" type="contact">
-      <always_on>true</always_on>
-      <update_rate>100</update_rate>
-      <contact>
-        <collision>front_left_wheel_collision</collision>
-      </contact>
-      <plugin name="fl_bumper_plugin" filename="libgazebo_ros_bumper.so">
-        <ros>
-          <namespace>kobra_mk5</namespace>
-          <remapping>bumper_states:=front_left_contact_forces</remapping>
-        </ros>
-        <bumperTopicName>bumper_topic</bumperTopicName>
-        <frameName>front_left_wheel</frameName>
-      </plugin>
-    </sensor>
+      <sensor name="fl_bumper_plugin" type="contact">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <contact>
+          <collision>front_left_wheel_collision</collision>
+        </contact>
+        <plugin name="fl_bumper_plugin" filename="libgazebo_ros_bumper.so">
+          <ros>
+            <namespace>kobra_mk5</namespace>
+            <remapping>bumper_states:=front_left_contact_forces</remapping>
+          </ros>
+          <bumperTopicName>bumper_topic</bumperTopicName>
+          <frameName>front_left_wheel</frameName>
+        </plugin>
+      </sensor>
 
     <!-- <sensor name="contact_sensor" type="contact">
       <always_on>true</always_on>
@@ -285,7 +289,7 @@
     </link>
 
     <link name="front_right_wheel">
-      <pose>-0.76 -1.41 0.3 0 0 0</pose>
+      <pose>-0.76 -1.41 0.31265 0 0 0</pose>
       <inertial>
         <mass>11</mass>
         <inertia>
@@ -298,7 +302,6 @@
         </inertia>
       </inertial>
       <visual name="front_right_wheel_visual">
-        <pose>-0.04 0.0 0.0 0 0 0</pose>
         <pose>0 0 0.0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -318,14 +321,18 @@
           <sphere>
             <radius>0.31265</radius>
           </sphere>
+          <!-- <cylinder>
+            <radius>0.31265</radius>
+            <length>0.055</length>
+          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <mu>9.9</mu>
-              <mu2>9.9</mu2>
-              <slip1>0.0</slip1>
-              <slip2>0.0</slip2>
+              <mu>10</mu>
+              <mu2>10</mu2>
+              <slip1>0.01</slip1>
+              <slip2>0.01</slip2>
             </ode>
           </friction>
           <contact>
@@ -358,7 +365,7 @@
 
 
     <link name="rear_left_wheel">
-      <pose>0.786 1.45 0.3 0 0 0</pose>
+      <pose>0.786 1.45 0.31265 0 0 0</pose>
       <inertial>
         <mass>11</mass>
         <inertia>
@@ -391,14 +398,18 @@
           <sphere>
             <radius>0.31265</radius>
           </sphere>
+          <!-- <cylinder>
+            <radius>0.31265</radius>
+            <length>0.055</length>
+          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <mu>10.1</mu>
-              <mu2>9.9</mu2>
-              <slip1>0.0</slip1>
-              <slip2>0.0</slip2>
+              <mu>10</mu>
+              <mu2>10</mu2>
+              <slip1>0.001</slip1>
+              <slip2>0.001</slip2>
             </ode>
           </friction>
           <contact>
@@ -429,8 +440,9 @@
 
     </link>
 
+
     <link name="rear_right_wheel">
-      <pose>-0.786 1.45 0.3 0 0 0</pose>
+      <pose>-0.786 1.45 0.31265 0 0 0</pose>
       <inertial>
         <mass>11</mass>
         <inertia>
@@ -462,14 +474,18 @@
           <sphere>
             <radius>0.31265</radius>
           </sphere>
+          <!-- <cylinder>
+            <radius>0.31265</radius>
+            <length>0.055</length>
+          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <mu>10.1</mu>
-              <mu2>9.9</mu2>
-              <slip1>0.0</slip1>
-              <slip2>0.0</slip2>
+              <mu>10</mu>
+              <mu2>10</mu2>
+              <slip1>0.001</slip1>
+              <slip2>0.001</slip2>
             </ode>
           </friction>
           <contact>
@@ -500,7 +516,9 @@
     </link>
 
     <joint type="universal" name="front_left_combined_joint">
-      <pose>0 0 0 -0.08726646259971647 0 0</pose>
+      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
+      <!-- <pose>0.76 -1.41 0.31265 0 0 0</pose> -->
+      <pose>0 0 0 0 0 0</pose>
       <child>front_left_wheel</child>
       <parent>chassis</parent>
       <axis>
@@ -520,7 +538,8 @@
     </joint>
 
     <joint type="universal" name="front_right_combined_joint">
-      <pose>0 0 0 -0.08726646259971647 0 0</pose>
+      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
+      <pose>0 0 0 0 0 0</pose>
       <child>front_right_wheel</child>
       <parent>chassis</parent>
       <axis>
@@ -647,6 +666,9 @@
       </wheel>
     </plugin> -->
 
+
+    <!-- BE CARUFEL WITH THIS -->   
+    <!-- THE_ONE_USED -->
     <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
       <wheel link_name="front_left_wheel">
         <slip_compliance_lateral>0.15</slip_compliance_lateral>
@@ -670,6 +692,28 @@
       </wheel>
     </plugin>
 
+    <!-- <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
+      <wheel link_name="front_left_wheel">
+        <slip_compliance_lateral>10.15</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="front_right_wheel">
+        <slip_compliance_lateral>10.15</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="rear_left_wheel">
+        <slip_compliance_lateral>0.01</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.15</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+      <wheel link_name="rear_right_wheel">
+        <slip_compliance_lateral>0.01</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.15</slip_compliance_longitudinal>
+        <wheel_normal_force>3315</wheel_normal_force>
+      </wheel>
+    </plugin> -->
 
     <!-- <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
       <wheel link_name="front_left_wheel">
@@ -845,6 +889,7 @@
       <update_rate>100</update_rate>
       <front_right_wheel>front_right_wheel</front_right_wheel>
       <front_left_wheel>front_left_wheel</front_left_wheel>
+      <!-- <front_left_wheel>front_left_wheel_contact</front_left_wheel> -->
       <rear_right_wheel>rear_right_wheel</rear_right_wheel>
       <rear_left_wheel>rear_left_wheel</rear_left_wheel>
       <imu_link>imu_link</imu_link>
@@ -855,7 +900,7 @@
         <namespace>kobra_mk5</namespace>
         <remapping>~/out:=joint_states</remapping>
       </ros>
-      <update_rate>25</update_rate>
+      <update_rate>100</update_rate>
       <joint_name>front_left_combined_joint</joint_name>
       <joint_name>front_right_combined_joint</joint_name>
       <joint_name>rear_left_wheel_joint</joint_name>
@@ -865,7 +910,8 @@
 
     <link name="imu_link">
       <!-- Position of the imu link was moved to rear axle -->
-      <pose relative_to="chassis">0 1.45 0.3 0 0 0</pose> 
+      <pose relative_to="chassis">0 1.45 0.31265 0 0 0</pose> 
+      <!-- <pose relative_to="chassis">0 -1.41 0.31265 0 0 0</pose>  -->
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>1e-8</mass>
@@ -980,6 +1026,248 @@
       <child>imu_link</child>
     </joint>
 
+
+    <!-- <link name="front_left_wheel_contact">
+      <pose>0.76 -1.41 0.031265 0 0 0</pose>
+      <inertial>
+        <mass>1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.01</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name="front_right_wheel_collision">
+        <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.031265</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>9.9</mu>
+              <mu2>9.9</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <kp>1e9</kp>
+            </ode>
+          </contact>
+        </surface>
+      </collision>      
+    </link>
+
+    <link name="front_right_wheel_contact">
+      <pose>-0.76 -1.41 0.031265 0 0 0</pose>
+      <inertial>
+        <mass>1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.01</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>      
+      <collision name="front_right_wheel_collision">
+        <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.031265</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>9.9</mu>
+              <mu2>9.9</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <kp>1e9</kp>
+            </ode>
+          </contact>
+        </surface>
+      </collision>   
+    </link>
+
+    <link name="rear_left_wheel_contact">
+      <pose>0.786 1.45 0.031265 0 0 0</pose>
+      <inertial>
+        <mass>11</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.01</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>     
+      <collision name="front_right_wheel_collision">
+        <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.031265</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>9.9</mu>
+              <mu2>9.9</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <kp>1e9</kp>
+            </ode>
+          </contact>
+        </surface>
+      </collision>    
+    </link>
+
+    <link name="rear_right_wheel_contact">
+      <pose>-0.786 1.45 0.031265 0 0 0</pose>
+      <inertial>
+        <mass>1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.01</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>      
+      <collision name="front_right_wheel_collision">
+        <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.031265</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>9.9</mu>
+              <mu2>9.9</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <kp>1e9</kp>
+            </ode>
+          </contact>
+        </surface>
+      </collision>   
+    </link>
+
+
+
+    <joint type="universal" name='front_left_wheel_contact_joint'>
+      <pose>0.76 -1.41 0 0 0 0</pose>
+      <xyz>0 0 1</xyz>
+      <parent>chassis</parent>
+      <child>front_left_wheel_contact</child>
+    </joint>
+
+
+    <joint type="universal" name='front_right_wheel_contact_joint'>
+      <pose>0.76 -1.41 0 0 0 0</pose>
+      <xyz>0 0 1</xyz>
+      <parent>chassis</parent>
+      <child>front_right_wheel_contact</child>
+    </joint>
+
+
+    <joint name='rear_left_wheel_contact_joint' type='fixed'>
+      <pose>0.76 -1.41 0 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>rear_left_wheel_contact</child>
+    </joint>
+
+
+    <joint name='rear_right_wheel_contact_joint' type='fixed'>
+      <pose>0.76 -1.41 0 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>rear_right_wheel_contact</child>
+    </joint> 
+
+
+    <plugin name="ht_link_contact_state_pub" filename="libht_nav_gazebo_ros_link_state_publisher.so">
+      <ros>
+        <namespace>kobra_mk5_contact</namespace>
+      </ros>
+      <update_rate>100</update_rate>
+      <front_right_wheel>front_right_wheel_contact</front_right_wheel>
+      <front_left_wheel>front_left_wheel_contact</front_left_wheel>
+      <rear_right_wheel>rear_right_wheel_contact</rear_right_wheel>
+      <rear_left_wheel>rear_left_wheel_contact</rear_left_wheel>
+      <imu_link>imu_link</imu_link>
+    </plugin>
+
+    <plugin name='ackermann_drive_contact' filename='libgazebo_ros_new_ackermann_drive.so'>
+
+      <ros>
+        <namespace>kobra_mk5</namespace>
+        <remapping>cmd_acc:=cmd_acc</remapping> 
+        <remapping>cmd_vel:=cmd_vel</remapping>
+        <remapping>odom:=odom2</remapping>
+        <remapping>distance:=distance2</remapping>
+      </ros>
+
+      <update_rate>400.0</update_rate>
+
+      <front_left_joint>front_left_wheel_contact_joint</front_left_joint>
+      <front_right_joint>front_right_wheel_contact_joint</front_right_joint>
+      <rear_left_joint>rear_left_wheel_contact_joint</rear_left_joint>
+      <rear_right_joint>rear_right_wheel_contact_joint</rear_right_joint>
+      <left_steering_joint>front_left_wheel_contact_joint</left_steering_joint>
+      <right_steering_joint>front_right_wheel_contact_joint</right_steering_joint>
+      <steering_wheel_joint>steering_joint___</steering_wheel_joint>
+
+      <max_steer>1.0</max_steer>
+
+      <max_steering_angle>45.85</max_steering_angle>
+
+      <max_speed>100</max_speed>
+
+      <left_steering_pid_gain>20 5 1</left_steering_pid_gain>
+      <left_steering_i_range>5 0</left_steering_i_range>
+      <right_steering_pid_gain>20 5 1</right_steering_pid_gain>
+      <right_steering_i_range>5 0</right_steering_i_range>
+      <linear_velocity_pid_gain>4 1 1</linear_velocity_pid_gain>
+      <linear_velocity_i_range>1 0</linear_velocity_i_range>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+      <publish_distance>true</publish_distance>
+
+      <odometry_frame>odom_demo</odometry_frame>
+      <robot_base_frame>chassis</robot_base_frame>
+    </plugin> -->
+    
 
     <!-- <link name="imu_link_ideal">
       <pose relative_to="chassis">0 0 0 0 0 0</pose>
