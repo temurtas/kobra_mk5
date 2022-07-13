@@ -137,6 +137,124 @@
       </collision>
     </link>
 
+    <joint type="universal" name="front_left_combined_joint">
+      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
+      <!-- <pose>0.76 -1.41 0.31265 0 0 0</pose> -->
+      <pose>0 0 0 0 0 0</pose>
+      <child>front_left_wheel</child>
+      <parent>chassis</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <!-- +- 50 degrees -->
+          <lower>-0.8727</lower>
+          <upper>0.8727</upper>
+        </limit>
+      </axis>
+      <axis2>
+        <xyz>1 0 0</xyz>
+        <dynamics>
+          <friction>18.0474092253</friction>
+        </dynamics>
+      </axis2>
+    </joint>
+
+    <joint type="universal" name="front_right_combined_joint">
+      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
+      <pose>0 0 0 0 0 0</pose>
+      <child>front_right_wheel</child>
+      <parent>chassis</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <!-- +- 50 degrees -->
+          <lower>-0.8727</lower>
+          <upper>0.8727</upper>
+        </limit>
+      </axis>
+      <axis2>
+        <xyz>1 0 0</xyz>
+        <dynamics>
+          <friction>18.0474092253</friction>
+        </dynamics>
+      </axis2>
+    </joint>
+    
+    <joint type="revolute" name="rear_axle_joint">
+      <child>rear_axle</child>
+      <parent>chassis</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-0.05089058524173028</lower>
+          <upper>0.05089058524173028</upper>
+        </limit>
+        <dynamics>
+          <spring_stiffness>20000.0</spring_stiffness>
+          <damping>2000.0</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint type="revolute" name="rear_left_wheel_joint">
+      <child>rear_left_wheel</child>
+      <parent>rear_axle</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <dynamics>
+          <friction>12.031606150200002</friction>
+        </dynamics>
+      </axis>
+    </joint>
+    
+    <joint type="revolute" name="rear_right_wheel_joint">
+      <child>rear_right_wheel</child>
+      <parent>rear_axle</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <dynamics>
+          <friction>12.031606150200002</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name="steering_joint" type="revolute">
+      <pose>-0.002 0 0 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>steering_wheel</child>
+      <axis>
+        <xyz>0 0.964095 0.265556</xyz>
+        <limit>
+          <lower>-7.85</lower>
+          <upper>7.85</upper>
+        </limit>
+        <dynamics>
+          <damping>1.0</damping>
+        </dynamics>
+        <use_parent_model_frame>true</use_parent_model_frame>
+      </axis>
+      <!-- <physics>
+        <ode>
+          <solver>
+            <iters>10</iters>
+          </solver>
+          <cfm_damping>1</cfm_damping>
+        </ode>
+      </physics> -->
+    </joint>
+
+    <joint name='imu_link_joint' type='fixed'>
+      <pose>0 1.45 0.3 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>imu_link</child>
+    </joint>
+
+    <joint name='camera_link_joint' type='fixed'>
+      <pose>0.0 0.0 0.0 0 0 0</pose>
+      <parent>chassis</parent>
+      <child>camera_link</child>
+    </joint>
+
     <link name="steering_wheel">
       <pose>0.357734 -0.627868 0.988243 -1.302101 0 0</pose>
       <inertial>
@@ -180,17 +298,32 @@
       </visual>
     </link>
 
+    <!-- <sensor name="contact_sensor" type="contact">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <contact>
+        <collision>front_left_wheel_collision</collision>
+      </contact>
+      <plugin name="contact_sensor_plugin" filename="libht_nav_gazebo_ros_contact_sensor.so">
+        <bumperTopicName>fixed_jaw_contact_sensor_state</bumperTopicName>
+        <frameName>gripper_fixed_jaw</frameName>
+      </plugin>
+    </sensor> -->
+
     <link name="front_left_wheel">
       <pose>0.76 -1.41 0.31265 0 0 0</pose>
       <inertial>
         <mass>11</mass>
         <inertia>
-          <ixx>0.58631238</ixx>
+          <!-- <ixx>0.58631238</ixx> -->
+          <ixx>0.4301</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.33552910</iyy>
+          <!-- <iyy>0.33552910</iyy> -->
+          <iyy>0.4301</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.33552910</izz>
+          <!-- <izz>0.33552910</izz> -->
+          <izz>0.4301</izz>
         </inertia>
       </inertial>
 
@@ -222,37 +355,29 @@
         <surface>
           <friction>
             <ode>
-              <mu>10</mu>
-              <mu2>10</mu2>
-              <slip1>0.01</slip1>
-              <slip2>0.01</slip2>
+              <mu>1e5</mu>
+              <mu2>1e5</mu2>
+              <slip1>0.0004</slip1>
+              <slip2>0.0004</slip2>
             </ode>
+            <torsional>
+              <coefficient>10.0</coefficient>
+              <surface_radius>0.31265</surface_radius>
+              <use_patch_radius>false</use_patch_radius>
+            </torsional>
           </friction>
           <contact>
             <ode>
               <min_depth>0.001</min_depth>
-              <kp>1e9</kp>
+              <kp>1e15</kp>
+              <kd>1e13</kd>
+              <soft_cfm>0</soft_cfm>
+              <soft_erp>0.20</soft_erp>
             </ode>
           </contact>
         </surface>
-
       </collision>
-      
-      <!-- <sensor name='my_contact' type='contact'>
-        <plugin name="contact_plugin" filename="libht_nav_gazebo_ros_contact_sensor.so"> -->
-          <!-- Change namespace and topics so:
-              Bumper state is published to: /custom_ns/custom_topic
-          -->
-          <!-- <ros>
-            <namespace>custom_ns</namespace>
-            <remapping>bumper_states:=custom_topic</remapping>
-          </ros> -->
-          <!-- <frameName>front_left_wheel</frameName> -->
 
-          <!-- Set TF frame name. Defaults to world -->
-          <!-- <frame_name>custom_frame</frame_name> -->
-        <!-- </plugin>
-      </sensor>  -->
       <sensor name="fl_bumper_plugin" type="contact">
         <always_on>true</always_on>
         <update_rate>100</update_rate>
@@ -269,23 +394,6 @@
         </plugin>
       </sensor>
 
-    <!-- <sensor name="contact_sensor" type="contact">
-      <always_on>true</always_on>
-      <update_rate>100</update_rate>
-      <contact>
-        <collision>front_left_wheel_collision</collision>
-      </contact>
-      <plugin name="contact_sensor_plugin" filename="libht_nav_gazebo_ros_contact_sensor.so">
-        <bumperTopicName>fixed_jaw_contact_sensor_state</bumperTopicName>
-        <frameName>gripper_fixed_jaw</frameName>
-      </plugin>
-    </sensor> -->
-
-      <!-- <sensor name='my_contact' type='contact'>
-        <contact>
-          <collision>collision</collision>
-        </contact>
-      </sensor> -->
     </link>
 
     <link name="front_right_wheel">
@@ -293,12 +401,15 @@
       <inertial>
         <mass>11</mass>
         <inertia>
-          <ixx>0.58631238</ixx>
+          <!-- <ixx>0.58631238</ixx> -->
+          <ixx>0.4301</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.33552910</iyy>
+          <!-- <iyy>0.33552910</iyy> -->
+          <iyy>0.4301</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.33552910</izz>
+          <!-- <izz>0.33552910</izz> -->
+          <izz>0.4301</izz>
         </inertia>
       </inertial>
       <visual name="front_right_wheel_visual">
@@ -329,20 +440,27 @@
         <surface>
           <friction>
             <ode>
-              <mu>10</mu>
-              <mu2>10</mu2>
-              <slip1>0.01</slip1>
-              <slip2>0.01</slip2>
+              <mu>1e5</mu>
+              <mu2>1e5</mu2>
+              <slip1>0.0004</slip1>
+              <slip2>0.0004</slip2>
             </ode>
+            <torsional>
+              <coefficient>10.0</coefficient>
+              <surface_radius>0.31265</surface_radius>
+              <use_patch_radius>false</use_patch_radius>
+            </torsional>
           </friction>
           <contact>
             <ode>
               <min_depth>0.001</min_depth>
-              <kp>1e9</kp>
+              <kp>1e15</kp>
+              <kd>1e13</kd>
+              <soft_cfm>0</soft_cfm>
+              <soft_erp>0.20</soft_erp>
             </ode>
           </contact>
         </surface>
-
       </collision>
 
       <sensor name="fr_bumper_plugin" type="contact">
@@ -369,12 +487,15 @@
       <inertial>
         <mass>11</mass>
         <inertia>
-          <ixx>0.58631238</ixx>
+          <!-- <ixx>0.58631238</ixx> -->
+          <ixx>0.4301</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.33552910</iyy>
+          <!-- <iyy>0.33552910</iyy> -->
+          <iyy>0.4301</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.33552910</izz>
+          <!-- <izz>0.33552910</izz> -->
+          <izz>0.4301</izz>
         </inertia>
       </inertial>
 
@@ -406,20 +527,27 @@
         <surface>
           <friction>
             <ode>
-              <mu>10</mu>
-              <mu2>10</mu2>
-              <slip1>0.001</slip1>
-              <slip2>0.001</slip2>
+              <mu>1e5</mu>
+              <mu2>1e5</mu2>
+              <slip1>0.0004</slip1>
+              <slip2>0.0004</slip2>
             </ode>
+            <torsional>
+              <coefficient>10.0</coefficient>
+              <surface_radius>0.31265</surface_radius>
+              <use_patch_radius>false</use_patch_radius>
+            </torsional>
           </friction>
           <contact>
             <ode>
               <min_depth>0.001</min_depth>
-              <kp>1e9</kp>
+              <kp>1e12</kp>
+              <kd>1</kd>
+              <soft_cfm>0</soft_cfm>
+              <soft_erp>0.20</soft_erp>
             </ode>
           </contact>
         </surface>
-
       </collision>
 
       <sensor name="rl_bumper_plugin" type="contact">
@@ -446,12 +574,15 @@
       <inertial>
         <mass>11</mass>
         <inertia>
-          <ixx>0.58631238</ixx>
+          <!-- <ixx>0.58631238</ixx> -->
+          <ixx>0.4301</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.33552910</iyy>
+          <!-- <iyy>0.33552910</iyy> -->
+          <iyy>0.4301</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.33552910</izz>
+          <!-- <izz>0.33552910</izz> -->
+          <izz>0.4301</izz>
         </inertia>
       </inertial>
       <visual name="rear_right_wheel_visual">
@@ -482,16 +613,24 @@
         <surface>
           <friction>
             <ode>
-              <mu>10</mu>
-              <mu2>10</mu2>
-              <slip1>0.001</slip1>
-              <slip2>0.001</slip2>
+              <mu>1e5</mu>
+              <mu2>1e5</mu2>
+              <slip1>0.0004</slip1>
+              <slip2>0.0004</slip2>
             </ode>
+            <torsional>
+              <coefficient>10.0</coefficient>
+              <surface_radius>0.31265</surface_radius>
+              <use_patch_radius>false</use_patch_radius>
+            </torsional>
           </friction>
           <contact>
             <ode>
               <min_depth>0.001</min_depth>
-              <kp>1e9</kp>
+              <kp>1e12</kp>
+              <kd>1</kd>
+              <soft_cfm>0</soft_cfm>
+              <soft_erp>0.20</soft_erp>
             </ode>
           </contact>
         </surface>
@@ -512,51 +651,7 @@
           <frameName>rear_right_wheel</frameName>
         </plugin>
       </sensor>
-
     </link>
-
-    <joint type="universal" name="front_left_combined_joint">
-      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
-      <!-- <pose>0.76 -1.41 0.31265 0 0 0</pose> -->
-      <pose>0 0 0 0 0 0</pose>
-      <child>front_left_wheel</child>
-      <parent>chassis</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <!-- +- 50 degrees -->
-          <lower>-0.8727</lower>
-          <upper>0.8727</upper>
-        </limit>
-      </axis>
-      <axis2>
-        <xyz>1 0 0</xyz>
-        <dynamics>
-          <friction>18.0474092253</friction>
-        </dynamics>
-      </axis2>
-    </joint>
-
-    <joint type="universal" name="front_right_combined_joint">
-      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
-      <pose>0 0 0 0 0 0</pose>
-      <child>front_right_wheel</child>
-      <parent>chassis</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <!-- +- 50 degrees -->
-          <lower>-0.8727</lower>
-          <upper>0.8727</upper>
-        </limit>
-      </axis>
-      <axis2>
-        <xyz>1 0 0</xyz>
-        <dynamics>
-          <friction>18.0474092253</friction>
-        </dynamics>
-      </axis2>
-    </joint>
 
     <link name="rear_axle">
       <pose>0 1.45 0.3 0 0 0</pose>
@@ -588,67 +683,6 @@
       </visual>
     </link>
 
-    <joint type="revolute" name="rear_axle_joint">
-      <child>rear_axle</child>
-      <parent>chassis</parent>
-      <axis>
-        <xyz>0 1 0</xyz>
-        <limit>
-          <lower>-0.05089058524173028</lower>
-          <upper>0.05089058524173028</upper>
-        </limit>
-        <dynamics>
-          <spring_stiffness>20000.0</spring_stiffness>
-          <damping>2000.0</damping>
-        </dynamics>
-      </axis>
-    </joint>
-    <joint type="revolute" name="rear_left_wheel_joint">
-      <child>rear_left_wheel</child>
-      <parent>rear_axle</parent>
-      <axis>
-        <xyz>1 0 0</xyz>
-        <dynamics>
-          <friction>12.031606150200002</friction>
-        </dynamics>
-      </axis>
-    </joint>
-    <joint type="revolute" name="rear_right_wheel_joint">
-      <child>rear_right_wheel</child>
-      <parent>rear_axle</parent>
-      <axis>
-        <xyz>1 0 0</xyz>
-        <dynamics>
-          <friction>12.031606150200002</friction>
-        </dynamics>
-      </axis>
-    </joint>
-
-    <joint name="steering_joint" type="revolute">
-      <pose>-0.002 0 0 0 0 0</pose>
-      <parent>chassis</parent>
-      <child>steering_wheel</child>
-      <axis>
-        <xyz>0 0.964095 0.265556</xyz>
-        <limit>
-          <lower>-7.85</lower>
-          <upper>7.85</upper>
-        </limit>
-        <dynamics>
-          <damping>1.0</damping>
-        </dynamics>
-        <use_parent_model_frame>true</use_parent_model_frame>
-      </axis>
-      <!-- <physics>
-        <ode>
-          <solver>
-            <iters>10</iters>
-          </solver>
-          <cfm_damping>1</cfm_damping>
-        </ode>
-      </physics> -->
-    </joint>
-
     <!-- Plugin to set wheel slip parameters according to wheel speed -->
     <!-- <plugin name="wheel_slip_front" filename="libgazebo_ros_wheel_slip.so">
       <ros>
@@ -669,7 +703,7 @@
 
     <!-- BE CARUFEL WITH THIS -->   
     <!-- THE_ONE_USED -->
-    <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
+    <!-- <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
       <wheel link_name="front_left_wheel">
         <slip_compliance_lateral>0.15</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.1</slip_compliance_longitudinal>
@@ -690,7 +724,7 @@
         <slip_compliance_longitudinal>0.15</slip_compliance_longitudinal>
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
-    </plugin>
+    </plugin> -->
 
     <!-- <plugin filename="libWheelSlipPlugin.so" name="wheel_slip">
       <wheel link_name="front_left_wheel">
@@ -1018,14 +1052,6 @@
     </sensor> -->
 
     </link>
-
-
-    <joint name='imu_link_joint' type='fixed'>
-      <pose>0 1.45 0.3 0 0 0</pose>
-      <parent>chassis</parent>
-      <child>imu_link</child>
-    </joint>
-
 
     <!-- <link name="front_left_wheel_contact">
       <pose>0.76 -1.41 0.031265 0 0 0</pose>
@@ -1520,12 +1546,6 @@
         </plugin>
       </sensor>
     </link>
-
-    <joint name='camera_link_joint' type='fixed'>
-      <pose>0.0 0.0 0.0 0 0 0</pose>
-      <parent>chassis</parent>
-      <child>camera_link</child>
-    </joint>
 
   </model>
 
