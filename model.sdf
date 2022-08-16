@@ -205,6 +205,12 @@
           <friction>12.031606150200002</friction>
         </dynamics>
       </axis>
+      <physics>
+        <ode>
+          <erp>0.2</erp>
+          <cfm>0.0</cfm>
+        </ode>
+      </physics>
     </joint>
     
     <joint type="revolute" name="rear_right_wheel_joint">
@@ -216,6 +222,12 @@
           <friction>12.031606150200002</friction>
         </dynamics>
       </axis>
+      <physics>
+        <ode>
+          <erp>0.2</erp>
+          <cfm>0.0</cfm>
+        </ode>
+      </physics>
     </joint>
 
     <joint name="steering_joint" type="revolute">
@@ -361,8 +373,8 @@
               <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
-              <slip1>0.0001</slip1>
-              <slip2>0.0001</slip2>
+              <slip1>0.0003</slip1>
+              <slip2>0.0003</slip2>
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -452,8 +464,8 @@
               <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
-              <slip1>0.0001</slip1>
-              <slip2>0.0001</slip2>
+              <slip1>0.0003</slip1>
+              <slip2>0.0003</slip2>
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -545,8 +557,8 @@
               <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
-              <slip1>0.0001</slip1>
-              <slip2>0.0001</slip2>
+              <slip1>0.0003</slip1>
+              <slip2>0.0003</slip2>
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -559,8 +571,10 @@
             <elastic_modulus>1e7</elastic_modulus>
             <ode>
               <min_depth>0.001</min_depth>
-              <kp>1e12</kp>
-              <kd>1</kd>
+              <!-- <kp>1e12</kp>
+              <kd>1</kd> -->
+              <kp>1e15</kp>
+              <kd>1e13</kd>
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.20</soft_erp>
             </ode>
@@ -637,8 +651,8 @@
               <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
-              <slip1>0.0001</slip1>
-              <slip2>0.0001</slip2>
+              <slip1>0.0003</slip1>
+              <slip2>0.0003</slip2>
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -651,8 +665,10 @@
             <elastic_modulus>1e7</elastic_modulus>
             <ode>
               <min_depth>0.001</min_depth>
-              <kp>1e12</kp>
-              <kd>1</kd>
+              <!-- <kp>1e12</kp>
+              <kd>1</kd> -->
+              <kp>1e15</kp>
+              <kd>1e13</kd>
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.20</soft_erp>
             </ode>
@@ -837,12 +853,26 @@
       <linear_velocity_pid_gain>400 1 1</linear_velocity_pid_gain>
       <linear_velocity_i_range>1 0</linear_velocity_i_range> -->
 
-      <left_steering_pid_gain>500 40 1</left_steering_pid_gain>
-      <left_steering_i_range>5 0</left_steering_i_range>
-      <right_steering_pid_gain>500 40 1</right_steering_pid_gain>
-      <right_steering_i_range>5 0</right_steering_i_range>
-      <linear_velocity_pid_gain>200 20 1</linear_velocity_pid_gain>
-      <linear_velocity_i_range>1 0</linear_velocity_i_range>
+      <!-- <left_steering_pid_gain>245.0 20.59 10.425</left_steering_pid_gain>
+      <left_steering_i_range>0.5 0</left_steering_i_range>
+      <right_steering_pid_gain>245.0 20.59 10.425</right_steering_pid_gain>
+      <right_steering_i_range>0.5 0</right_steering_i_range>
+       -->
+
+      <!-- <left_steering_pid_gain>375.0 20.59 10.425</left_steering_pid_gain>
+      <left_steering_i_range>0.05 0</left_steering_i_range>
+      <right_steering_pid_gain>375.0 20.59 50.425</right_steering_pid_gain>
+      <right_steering_i_range>0.1 0</right_steering_i_range> -->
+      
+      <!-- <linear_velocity_pid_gain>200 20 1</linear_velocity_pid_gain>
+      <linear_velocity_i_range>1 0</linear_velocity_i_range> -->
+
+      <left_steering_pid_gain>425.0 100.59 50.425</left_steering_pid_gain>
+      <left_steering_i_range>0.025 0</left_steering_i_range>
+      <right_steering_pid_gain>425.0 100.59 50.425</right_steering_pid_gain>
+      <right_steering_i_range>0.025 0</right_steering_i_range>
+      <linear_velocity_pid_gain>240 40 1</linear_velocity_pid_gain>
+      <linear_velocity_i_range>0.025 0</linear_velocity_i_range>
 
       <!-- output -->
       <publish_odom>true</publish_odom>
@@ -1463,7 +1493,7 @@
           <updateRateHZ>5.0</updateRateHZ>  
           <posDriftFreq>500.0</posDriftFreq>  
           <gaussianNoise>0.0</gaussianNoise>  
-          <posBiasStd>0.00</posBiasStd>  
+          <posBiasStd>0.0</posBiasStd>  
           <posDriftStd>1.5</posDriftStd>  
         </plugin>
       </sensor> -->
