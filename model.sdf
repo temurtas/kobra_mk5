@@ -147,8 +147,6 @@
     <!-- ************************************************************************ -->
 
     <joint type="universal" name="front_left_combined_joint">
-      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
-      <!-- <pose>0.76 -1.41 0.31265 0 0 0</pose> -->
       <pose>0 0 0 0 0 0</pose>
       <child>front_left_wheel</child>
       <parent>chassis</parent>
@@ -169,7 +167,6 @@
     </joint>
 
     <joint type="universal" name="front_right_combined_joint">
-      <!-- <pose>0 0 0 -0.08726646259971647 0 0</pose> -->
       <pose>0 0 0 0 0 0</pose>
       <child>front_right_wheel</child>
       <parent>chassis</parent>
@@ -254,14 +251,6 @@
         </dynamics>
         <use_parent_model_frame>true</use_parent_model_frame>
       </axis>
-      <!-- <physics>
-        <ode>
-          <solver>
-            <iters>10</iters>
-          </solver>
-          <cfm_damping>1</cfm_damping>
-        </ode>
-      </physics> -->
     </joint>
 
     <!-- ************************************************************************ -->
@@ -361,24 +350,14 @@
           <sphere>
             <radius>0.31265</radius>
           </sphere>
-          <!-- <cylinder>
-            <radius>0.31265</radius>
-            <length>0.055</length>
-          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <!-- <mu>1e5</mu>
-              <mu2>1e5</mu2>
-              <slip1>0.0004</slip1>
-              <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
               <slip1>0.0003</slip1>
               <slip2>0.0003</slip2>
-              <!-- <slip1>0.009</slip1>
-              <slip2>0.009</slip2> -->
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -391,7 +370,6 @@
             <elastic_modulus>1e7</elastic_modulus>
             <ode>
               <min_depth>0.005</min_depth>
-              <!-- <min_depth>0.001</min_depth> -->
               <kp>1e15</kp>
               <kd>1e2</kd>
               <soft_cfm>0</soft_cfm>
@@ -452,24 +430,14 @@
           <sphere>
             <radius>0.31265</radius>
           </sphere>
-          <!-- <cylinder>
-            <radius>0.31265</radius>
-            <length>0.055</length>
-          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <!-- <mu>1e5</mu>
-              <mu2>1e5</mu2>
-              <slip1>0.0004</slip1>
-              <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
               <slip1>0.0003</slip1>
               <slip2>0.0003</slip2>
-              <!-- <slip1>0.009</slip1>
-              <slip2>0.009</slip2> -->
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -544,24 +512,14 @@
           <sphere>
             <radius>0.31265</radius>
           </sphere>
-          <!-- <cylinder>
-            <radius>0.31265</radius>
-            <length>0.055</length>
-          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <!-- <mu>1e5</mu>
-              <mu2>1e5</mu2>
-              <slip1>0.0004</slip1>
-              <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
               <slip1>0.0003</slip1>
               <slip2>0.0003</slip2>
-              <!-- <slip1>0.009</slip1>
-              <slip2>0.009</slip2> -->
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -574,8 +532,6 @@
             <elastic_modulus>1e7</elastic_modulus>
             <ode>
               <min_depth>0.005</min_depth>
-              <!-- <kp>1e12</kp>
-              <kd>1</kd> -->
               <kp>1e15</kp>
               <kd>1e2</kd>
               <soft_cfm>0</soft_cfm>
@@ -634,24 +590,14 @@
           <sphere>
             <radius>0.31265</radius>
           </sphere>
-          <!-- <cylinder>
-            <radius>0.31265</radius>
-            <length>0.055</length>
-          </cylinder> -->
         </geometry>
         <surface>
           <friction>
             <ode>
-              <!-- <mu>1e5</mu>
-              <mu2>1e5</mu2>
-              <slip1>0.0004</slip1>
-              <slip2>0.0004</slip2> -->
               <mu>0.9</mu>
               <mu2>0.9</mu2>
               <slip1>0.0003</slip1>
               <slip2>0.0003</slip2>
-              <!-- <slip1>0.009</slip1>
-              <slip2>0.009</slip2> -->
             </ode>
             <torsional>
               <coefficient>10.0</coefficient>
@@ -664,8 +610,6 @@
             <elastic_modulus>1e7</elastic_modulus>
             <ode>
               <min_depth>0.005</min_depth>
-              <!-- <kp>1e12</kp>
-              <kd>1</kd> -->
               <kp>1e15</kp>
               <kd>1e2</kd>
               <soft_cfm>0</soft_cfm>
@@ -766,25 +710,25 @@
     </link>    
 
     <!-- ************************************************************************ -->
-    <!-- SLIP PLUG-IN *********************************************************** -->
+    <!-- GAZEBO SLIP PLUG-IN **************************************************** -->
     <!-- ************************************************************************ -->
 
-    <plugin filename="libht_nav_gazebo_wheel_slip_plugin.so" name="wheel_slip">
+    <plugin filename="libht_nav_gazebo_wheel_surface_plugin.so" name="wheel_surface_plugin">
       <config_params>
-        <!-- bounce -->
+        <!-- link->collision->surface->bounce -->
         <bounce>0.0</bounce>
         <bounceThreshold>0.0</bounceThreshold> 
-        <!-- friction -->
+        <!-- link->collision->surface->friction->ode -->
         <MuPrimary>0.9</MuPrimary> 
         <MuSecondary>0.9</MuSecondary>    
         <slip1>0.0003</slip1>
         <slip2>0.0003</slip2>
-        <!-- torsional -->
+        <!-- link->collision->surface->friction->torsional  -->
         <MuTorsion>10.0</MuTorsion> 
         <SurfaceRadius>0.31265</SurfaceRadius> 
         <PatchRadius>0</PatchRadius> 
         <UsePatchRadius>0</UsePatchRadius> 
-        <!-- contact -->
+        <!-- link->collision->surface->friction->contact -->
         <PoissonsRatio>0.5</PoissonsRatio> 
         <ElasticModulus>1e7</ElasticModulus> 
         <minDepth>0.005</minDepth>
@@ -798,41 +742,6 @@
         <slipComplianceLongitudinal>0.1</slipComplianceLongitudinal>
       </config_params>
 
-      <!-- <collision name="wheel_collision">
-        <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
-        <geometry>
-          <sphere>
-            <radius>0.31265</radius>
-          </sphere>
-        </geometry>
-        <surface>
-          <friction>
-            <ode>
-              <mu>0.9</mu>
-              <mu2>0.9</mu2>
-              <slip1>0.0003</slip1>
-              <slip2>0.0003</slip2>
-            </ode>
-            <torsional>
-              <coefficient>10.0</coefficient>
-              <surface_radius>0.31265</surface_radius>
-              <use_patch_radius>false</use_patch_radius>
-            </torsional>
-          </friction>
-          <contact>
-            <poissons_ratio>0.5</poissons_ratio>
-            <elastic_modulus>1e7</elastic_modulus>
-            <ode>
-              <min_depth>0.005</min_depth>
-              <kp>1e15</kp>
-              <kd>1e2</kd>
-              <soft_cfm>0</soft_cfm>
-              <soft_erp>0.20</soft_erp>
-            </ode>
-          </contact>
-        </surface>
-      </collision> -->
-
       <wheel link_name="front_left_wheel">
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
@@ -845,8 +754,16 @@
       <wheel link_name="rear_right_wheel">
         <wheel_normal_force>3315</wheel_normal_force>
       </wheel>
+
+      <imu_link link_name="imu_link">
+        <wheel_normal_force>3315</wheel_normal_force>
+      </imu_link>
     </plugin>
     
+    <!-- ************************************************************************ -->
+    <!-- OLD GAZEBO ROS SLIP PLUG-IN ******************************************** -->
+    <!-- ************************************************************************ -->
+
     <!-- <plugin filename="libgazebo_wheel_slip_plugin.so" name="wheel_slip">
       <wheel link_name="front_left_wheel">
         <slip_compliance_lateral>0.1</slip_compliance_lateral>
@@ -957,10 +874,6 @@
       <odometry_frame>odom_demo</odometry_frame>
       <robot_base_frame>chassis</robot_base_frame>
     </plugin>
-    
-    <!-- 
-    <plugin name="ht_joint_pubsub" filename="libht_joint_pubsub.so"/>
-    -->
 
     <!-- ************************************************************************ -->
     <!-- SENSOR PLUG-INS ******************************************************** -->
