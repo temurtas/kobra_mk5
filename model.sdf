@@ -715,6 +715,7 @@
 
     <plugin filename="libht_nav_gazebo_wheel_surface_plugin.so" name="wheel_surface_plugin">
       <config_params>
+        <ContactForceUpdateFreq>100</ContactForceUpdateFreq>
         <!-- link->collision->surface->bounce -->
         <bounce>0.0</bounce>
         <bounceThreshold>0.0</bounceThreshold> 
