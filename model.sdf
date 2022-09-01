@@ -732,7 +732,7 @@
         <!-- link->collision->surface->friction->contact -->
         <PoissonsRatio>0.5</PoissonsRatio> 
         <ElasticModulus>1e7</ElasticModulus> 
-        <minDepth>0.005</minDepth>
+        <minDepth>0.01</minDepth>
         <kp>1e15</kp>
         <kd>1e2</kd>
         <cfm>0.0</cfm>
@@ -863,7 +863,7 @@
       <left_steering_i_range>0.025 0</left_steering_i_range>
       <right_steering_pid_gain>425.0 100.59 50.425</right_steering_pid_gain>
       <right_steering_i_range>0.025 0</right_steering_i_range>
-      <linear_velocity_pid_gain>240 40 1</linear_velocity_pid_gain>
+      <linear_velocity_pid_gain>120 40 1</linear_velocity_pid_gain>
       <linear_velocity_i_range>0.025 0</linear_velocity_i_range>
 
       <!-- output -->
